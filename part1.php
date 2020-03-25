@@ -134,7 +134,7 @@
             })
         }
 
-        xhr.open('get', 'http://api.open-notify.org/astros.json');
+        xhr.open('get', '//api.open-notify.org/astros.json');
         xhr.send();
     </script>
 </body>
