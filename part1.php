@@ -34,8 +34,7 @@
                 <div class="box6 flex col" id="box2">
                     <div class="flex col" id="topic4">
                         <h2>Topic 4 - Consuming a JSON Web Service using XMLHTTPRequest</h2>
-                        <h3>Using an API that shows info about people that are on Space right now</h3>
-                        <p>People in Space</p>
+                        <h3>API for Phrases about Chuck Norris - For new ones, just load the page again</h3>
                     </div>
                     <h2>Topic 6 - DOM</h2>
                     <div class="flex col" id="topic5">
@@ -116,26 +115,28 @@
             document.getElementById('remove').addEventListener('click', remove);
         })
 
-        const xhr = new XMLHttpRequest();
+        var data = null;
 
-        xhr.onload = function () {
-            const restObj = JSON.parse(this.responseText);
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-            const add = document.getElementById('topic4');
+xhr.addEventListener("readystatechange", function () {
+	if (this.readyState === this.DONE) {
+        var response = JSON.parse(this.responseText);
+        console.log(response.value);
+        const add = document.getElementById('topic4');
             let newPara = document.createElement('p');
-            newPara.textContent = 'How Many: ' + restObj.number;
+            newPara.textContent = response.value;
             add.appendChild(newPara);
+	}
+});
 
-            restObj.people.forEach(element => {
-                const add = document.getElementById('topic4');
-                let newPara = document.createElement('p');
-                newPara.textContent = 'Name: ' + element.name;
-                add.appendChild(newPara);
-            })
-        }
+xhr.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random");
+xhr.setRequestHeader("x-rapidapi-host", "matchilling-chuck-norris-jokes-v1.p.rapidapi.com");
+xhr.setRequestHeader("x-rapidapi-key", "724e1901a5mshdd731b38d81adeep13b42djsneb82489803b3");
+xhr.setRequestHeader("accept", "application/json");
 
-        xhr.open('get', 'http://api.open-notify.org/astros.json', true);
-        xhr.send();
+xhr.send(data);
     </script>
 </body>
 
